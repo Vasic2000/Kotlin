@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var viewModel: MainViewModel
-    var k: Int = 1;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,23 +17,26 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         val livedata =  viewModel.getViewStateLiveData()
+        val counter = viewModel.getCounterLibeData()
 
         livedata.observe(this, Observer {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
 
         livedata.observe(this, Observer {
-            tv_hello.text = it;
+            tv_hello.text = it
+        })
+
+        counter.observe(this, Observer {
+            tv_counter.text = it.toString()
         })
 
         btnPlus.setOnClickListener {
-            k++;
-            viewModel.updateHelloPlus(k);
+            viewModel.updateHelloPlus()
         }
 
         btnMinus.setOnClickListener {
-            k--;
-            viewModel.updateHelloMinus(k);
+            viewModel.updateHelloMinus()
         }
 
         btnExit.setOnClickListener {

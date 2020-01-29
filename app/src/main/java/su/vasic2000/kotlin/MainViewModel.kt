@@ -5,21 +5,30 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainViewModel(): ViewModel() {
-    private val viewStateData: MutableLiveData<String> = MutableLiveData();
+    private val viewStateData: MutableLiveData<String> = MutableLiveData()
+    private var k : Int = 1
+
+    private val counter: MutableLiveData<Int> = MutableLiveData()
+
 
     init {
         viewStateData.value = "Hellow!"
+        counter.value = 1
     }
 
     fun getViewStateLiveData(): LiveData<String> {
         return viewStateData
     }
 
-    fun updateHelloPlus(k: Int){
-        viewStateData.setValue("Hello! " + k)
+    fun getCounterLibeData(): LiveData<Int> = counter
+
+    fun updateHelloPlus() {
+        counter.setValue(counter.value!!.plus(1))
+        viewStateData.setValue("Hello! " + counter.value)
     }
 
-    fun updateHelloMinus(k: Int){
-        viewStateData.setValue("Hello! " + k)
+    fun updateHelloMinus() {
+        counter.setValue(counter.value!!.minus(1))
+        viewStateData.setValue("Hello! " + counter.value)
     }
 }
