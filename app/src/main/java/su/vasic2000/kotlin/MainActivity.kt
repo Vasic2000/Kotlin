@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         val livedata =  viewModel.getViewStateLiveData()
-        val counter = viewModel.getCounterLibeData()
+        val emodzy = viewModel.getEmodzyLibeData()
 
         livedata.observe(this, Observer {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity() {
             tv_hello.text = it
         })
 
-        counter.observe(this, Observer {
-            tv_counter.text = it.toString()
+        emodzy.observe(this, Observer {
+            tv_counter.text = it
         })
 
         btnPlus.setOnClickListener {

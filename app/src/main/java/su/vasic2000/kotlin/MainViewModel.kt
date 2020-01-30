@@ -8,27 +8,30 @@ class MainViewModel(): ViewModel() {
     private val viewStateData: MutableLiveData<String> = MutableLiveData()
     private var k : Int = 1
 
-    private val counter: MutableLiveData<Int> = MutableLiveData()
-
+    private val emodzy: MutableLiveData<String> = MutableLiveData()
 
     init {
         viewStateData.value = "Hellow!"
-        counter.value = 1
+        emodzy.value = ":)"
     }
 
     fun getViewStateLiveData(): LiveData<String> {
         return viewStateData
     }
 
-    fun getCounterLibeData(): LiveData<Int> = counter
+    fun getEmodzyLibeData(): LiveData<String> {
+        return emodzy
+    }
 
     fun updateHelloPlus() {
-        counter.setValue(counter.value!!.plus(1))
-        viewStateData.setValue("Hello! " + counter.value)
+        k++
+        if((k > 0) && !emodzy.value.equals(":)")) emodzy.value = ":)"
+        viewStateData.setValue("Hello! " + k)
     }
 
     fun updateHelloMinus() {
-        counter.setValue(counter.value!!.minus(1))
-        viewStateData.setValue("Hello! " + counter.value)
+        k--;
+        if((k <= 0) && !emodzy.value.equals(":(")) emodzy.value = ":("
+        viewStateData.setValue("Hello! " + k)
     }
 }
