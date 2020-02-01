@@ -3,35 +3,20 @@ package su.vasic2000.kotlin
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import su.vasic2000.kotlin.data.NoteRepository
 
-class MainViewModel(): ViewModel() {
-    private val viewStateData: MutableLiveData<String> = MutableLiveData()
-    private var k : Int = 1
-
-    private val emodzy: MutableLiveData<String> = MutableLiveData()
+class MainViewModel: ViewModel() {
+    private val viewStateLiveData: MutableLiveData<MainViewState> = MutableLiveData()
 
     init {
-        viewStateData.value = "Hellow!"
-        emodzy.value = ":)"
+        viewStateLiveData.value = MainViewState(NoteRepository.getNotes())
     }
 
-    fun getViewStateLiveData(): LiveData<String> {
-        return viewStateData
+    fun viewState(): LiveData<MainViewState> = viewStateLiveData
+
+    override fun onCleared() {
+        super.onCleared()
+        println("onCleared")
     }
 
-    fun getEmodzyLibeData(): LiveData<String> {
-        return emodzy
-    }
-
-    fun updateHelloPlus() {
-        k++
-        if((k > 0) && !emodzy.value.equals(":)")) emodzy.value = ":)"
-        viewStateData.setValue("Hello! " + k)
-    }
-
-    fun updateHelloMinus() {
-        k--;
-        if((k <= 0) && !emodzy.value.equals(":(")) emodzy.value = ":("
-        viewStateData.setValue("Hello! " + k)
-    }
 }
