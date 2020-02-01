@@ -56,6 +56,5 @@ object NoteRepository {
         )
     }
 
-
     fun getNotes(): List<Note> = notes
 }
