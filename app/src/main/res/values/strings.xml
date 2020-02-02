@@ -3,4 +3,5 @@
     <string name="button_plus">Button Plus</string>
     <string name="button_minus">Button Minus</string>
     <string name="quite">Quite</string>
+    <string name="AppName">Notes App</string>
 </resources>
