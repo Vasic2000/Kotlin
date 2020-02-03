@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_note.view.*
+
+
 import su.vasic2000.kotlin.data.entity.Note
 
 class NotesRVAdapter : RecyclerView.Adapter<NotesRVAdapter.ViewHolder>()  {
