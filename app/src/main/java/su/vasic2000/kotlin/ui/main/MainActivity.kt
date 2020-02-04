@@ -1,4 +1,4 @@
-package su.vasic2000.kotlin
+package su.vasic2000.kotlin.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import su.vasic2000.kotlin.R
 
 class MainActivity : AppCompatActivity() {
 
