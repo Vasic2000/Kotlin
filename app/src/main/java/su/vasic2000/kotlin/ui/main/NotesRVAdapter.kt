@@ -11,7 +11,7 @@ import su.vasic2000.kotlin.R
 
 import su.vasic2000.kotlin.data.entity.Note
 
-class NotesRVAdapter : RecyclerView.Adapter<NotesRVAdapter.ViewHolder>() {
+class NotesRVAdapter(val onItemViewClick : ((Note) -> Unit)? = null)  : RecyclerView.Adapter<NotesRVAdapter.ViewHolder>() {
 
     var notes: List<Note> = listOf()
         set(value) {
@@ -51,6 +51,8 @@ class NotesRVAdapter : RecyclerView.Adapter<NotesRVAdapter.ViewHolder>() {
                 Note.Color.DARKBLUE -> R.color.darkblue
             }
             (this as CardView).setCardBackgroundColor(ContextCompat.getColor(itemView.context, color))
+
+            itemView.setOnClickListener (onItemV)
         }
     }
 }
