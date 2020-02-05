@@ -20,7 +20,7 @@ class NoteActivity  : AppCompatActivity(){
     companion object {
         private val EXTRA_NOTE = NoteActivity::class.java.name + "extra.NOTE"
         private const val DATE_TIME_FORMAT = "dd.MM.yy HH:mm"
-        private const val SAVE_DELAY = 2000L
+        private const val SAVE_DELAY = 2500L
 
         fun start(context: Context, note: Note? = null) {
             val intent = Intent(context, NoteActivity::class.java)
@@ -48,22 +48,23 @@ class NoteActivity  : AppCompatActivity(){
 
         note = intent.getParcelableExtra(EXTRA_NOTE)
         setSupportActionBar(toolbar)
+
         supportActionBar?.setDefaultDisplayHomeAsUpEnabled(true)
 
         viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
 
-        supportActionBar?.title = note?.let {
-            SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(it.lastChanged)
+        supportActionBar?.title = note?.let {node: Note ->
+            SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(node.lastChanged)
         } ?: getString(R.string.new_note_title)
 
         initView()
     }
 
     fun initView() {
-        note?.let { note ->
-            et_title.setText(note.title)
-            et_body.setText(note.text)
-            val color = when (note.color) {
+        note?.let {
+            et_title.setText(it.title)
+            et_body.setText(it.text)
+            val color = when (it.color) {
                 Note.Color.WHITE -> R.color.white
                 Note.Color.YELLOW -> R.color.yellow
                 Note.Color.GREEN -> R.color.green
@@ -92,8 +93,8 @@ class NoteActivity  : AppCompatActivity(){
                 lastChanged = Date()
             ) ?: createNewNote()
 
-            note?.let { viewModel.save(it) }
-
+            viewModel.save(note!!)
+//            note?.let { viewModel.save(it) }
         }, SAVE_DELAY)
     }
 

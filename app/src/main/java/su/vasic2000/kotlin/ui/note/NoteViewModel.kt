@@ -7,11 +7,11 @@ import su.vasic2000.kotlin.data.entity.Note
 class NoteViewModel : ViewModel() {
     private var pendingNote: Note? = null
 
-    fun save(note: Note){
+    fun save(note: Note) {
         pendingNote = note
     }
 
-    override fun onCleared(){
+    override fun onCleared() {
         pendingNote?.let {
             NoteRepository.saveNote(it)
         }

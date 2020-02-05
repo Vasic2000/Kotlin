@@ -5,4 +5,7 @@
     <dimen name="marginEnd">8dp</dimen>
     <dimen name="marginGeneral">8dp</dimen>
     <dimen name="layoutMargin">4dp</dimen>
+    <dimen name="NoteMargin">16dp</dimen>
+    <dimen name="FabToEnd">16dp</dimen>
+    <dimen name="FabToBottom">16dp</dimen>
 </resources>
