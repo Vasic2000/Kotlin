@@ -17,7 +17,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             app:title="@string/AppName"
-            app:titleTextColor="@color/colorYellow"/>
+            app:titleTextColor="@android:color/black"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -48,6 +48,41 @@
             android:layout_marginTop="@dimen/NoteMargin"
             android:background="@null"
             android:hint="@string/NoteText"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/NoteMargin"
+            >
+
+            <Button
+                android:id="@+id/btn_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/blue"
+                android:text="@string/btnBlue"
+                android:layout_margin="@dimen/minPadding"/>
+
+            <Button
+                android:id="@+id/btn_orange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/orange"
+                android:text="@string/btnOrange"
+                android:layout_margin="@dimen/minPadding"/>
+
+            <Button
+                android:id="@+id/btn_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/green"
+                android:text="@string/btnGreen"
+                android:layout_margin="@dimen/minPadding"/>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

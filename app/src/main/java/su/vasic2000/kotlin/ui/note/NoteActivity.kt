@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_note.*
@@ -75,12 +76,29 @@ class NoteActivity  : AppCompatActivity(){
                 Note.Color.ORANGE -> R.color.orange
                 Note.Color.DARKBLUE -> R.color.darkblue
             }
-
             toolbar.setBackgroundColor(ContextCompat.getColor(this, color))
         }
 
         et_title.addTextChangedListener(textChahgeListener)
         et_body.addTextChangedListener(textChahgeListener)
+
+        btn_blue.setOnClickListener(){
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
+            note?.color = Note.Color.BLUE
+            saveNote()
+        }
+
+        btn_orange.setOnClickListener(){
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.orange))
+            note?.color = Note.Color.ORANGE
+            saveNote()
+        }
+
+        btn_green.setOnClickListener(){
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
+            note?.color = Note.Color.GREEN
+            saveNote()
+        }
     }
 
     fun saveNote() {
@@ -98,7 +116,10 @@ class NoteActivity  : AppCompatActivity(){
         }, SAVE_DELAY)
     }
 
-    private fun createNewNote(): Note = Note(UUID.randomUUID().toString(), et_title.text.toString(), et_body.text.toString())
+    private fun createNewNote(): Note = Note(
+        UUID.randomUUID().toString(),
+        et_title.text.toString(),
+        et_body.text.toString())
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         android.R.id.home -> {
