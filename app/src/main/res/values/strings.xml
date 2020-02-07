@@ -4,4 +4,11 @@
     <string name="button_minus">Button Minus</string>
     <string name="quite">Quite</string>
     <string name="AppName">Notes App</string>
+
+    <string name="new_note_title">Новая заметка</string>
+    <string name="ExtraTitle">Title</string>
+    <string name="NoteText">Note text</string>
+    <string name="btnBlue">Blue</string>
+    <string name="btnOrange">Orange</string>
+    <string name="btnGreen">Green</string>
 </resources>
