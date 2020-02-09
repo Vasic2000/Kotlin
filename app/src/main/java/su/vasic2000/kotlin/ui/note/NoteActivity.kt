@@ -31,7 +31,6 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     override val viewModel: NoteViewModel by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
     override val layoutRes = R.layout.activity_note
 
-
     val textChahgeListener = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}

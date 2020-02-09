@@ -11,7 +11,6 @@ object NoteRepository {
 
     fun getNoteById(id: String) = remoteProvider.getNoteById(id)
 
-    fun saveNote(note: Note) {
+    fun saveNote(note: Note) =
         remoteProvider.saveNote(note)
-    }
 }

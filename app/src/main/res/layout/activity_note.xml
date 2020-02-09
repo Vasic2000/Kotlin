@@ -16,8 +16,7 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            app:title="@string/AppName"
-            app:titleTextColor="@android:color/black"/>
+            app:title="@string/AppName" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

@@ -23,7 +23,7 @@ abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity() {
 //                    renderError(it)
 //                    return
 //                }
-
+                renderData(t.data)
 
             }
 
