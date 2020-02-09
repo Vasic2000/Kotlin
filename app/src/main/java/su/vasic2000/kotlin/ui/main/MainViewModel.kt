@@ -1,21 +1,20 @@
 package su.vasic2000.kotlin.ui.main
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import su.vasic2000.kotlin.data.NoteRepository
+import su.vasic2000.kotlin.data.entity.Note
+import su.vasic2000.kotlin.ui.base.BaseViewModel
 
-class MainViewModel: ViewModel() {
-    private val viewStateLiveData: MutableLiveData<MainViewState> = MutableLiveData()
+class MainViewModel: BaseViewModel<List<Note>?, MainViewState>() {
 
     init {
         NoteRepository.getNotes().observeForever { notes ->
-            viewStateLiveData.value =
-                viewStateLiveData.value?.copy(notes = notes) ?: MainViewState(notes)
+            viewSateLiveData.value =
+                viewSateLiveData.value?.copy(notes = notes) ?: MainViewState(notes)
         }
     }
 
-    fun viewState(): LiveData<MainViewState> = viewStateLiveData
+    fun viewState(): LiveData<MainViewState> = viewSateLiveData
 
     override fun onCleared() {
         super.onCleared()
