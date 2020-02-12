@@ -42,7 +42,7 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDefaultDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val noteId = intent.getStringExtra(EXTRA_NOTE)
 
         noteId?.let {
