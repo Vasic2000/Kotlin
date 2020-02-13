@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "876507906385",
+    "firebase_url": "https://su-vasic2000-kotlin.firebaseio.com",
+    "project_id": "su-vasic2000-kotlin",
+    "storage_bucket": "su-vasic2000-kotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876507906385:android:fcd923dae552673e4d1370",
+        "android_client_info": {
+          "package_name": "su.vasic2000.kotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876507906385-jiqtr8na10f90s6gsfjdbgbu5pjk2rgg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "su.vasic2000.kotlin",
+            "certificate_hash": "b6b5c20288a330f637743039ff09b54a1e9c65c4"
+          }
+        },
+        {
+          "client_id": "876507906385-hf316slp36t6gadeljov0jhcjokjoj2f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2jYJ8iWFwAflsxa0eJd1WlvCiCbCA70s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876507906385-hf316slp36t6gadeljov0jhcjokjoj2f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

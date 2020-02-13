@@ -1,18 +1,21 @@
 package su.vasic2000.kotlin.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import su.vasic2000.kotlin.R
 import su.vasic2000.kotlin.data.entity.Note
+import su.vasic2000.kotlin.ui.base.BaseActivity
 import su.vasic2000.kotlin.ui.note.NoteActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
 
-    lateinit var viewModel: MainViewModel
+    override val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    override val layoutRes = R.layout.activity_main
     lateinit var adapter: NotesRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,24 +23,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         rv_notes.layoutManager = GridLayoutManager(this, 2)
-
         adapter = NotesRVAdapter(fun(note: Note) {
-            NoteActivity.start(this, note)
+            NoteActivity.start(this, note.id)
         })
 
         rv_notes.adapter = adapter
 
-        viewModel.viewState().observe(this, Observer {
-            it?.let {
-                adapter.notes = it.notes
-            }
-        })
-
         fab.setOnClickListener {
             NoteActivity.start(this)
+        }
+    }
+
+    override fun renderData(data: List<Note>?) {
+        data?.let {
+            adapter.notes = it
         }
     }
 
