@@ -2,6 +2,7 @@ package su.vasic2000.kotlin.data.provider
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import su.vasic2000.kotlin.data.entity.Note
@@ -11,9 +12,12 @@ class FireStoreProvider : RemoteDataProvider {
 
     companion object {
         private const val NOTES_COLLECTION = "notes"
+        private const val USERS_COLLECTION = "users"
+
     }
 
-    private val store: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
+    private val store by lazy { FirebaseFirestore.getInstance() }
+    private val currentUser get() = FirebaseAuth.getInstance().currentUser
     private val noteReference = store.collection(NOTES_COLLECTION)
 
     override fun subscribeToAllNotes() = MutableLiveData<NoteResult>().apply {
