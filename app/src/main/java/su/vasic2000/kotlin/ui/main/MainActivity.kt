@@ -77,9 +77,11 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>(), OutDialog.Logou
     override fun onLogOut() {
         AuthUI.getInstance()
             .signOut(this)
-            .addOnCompleteListener {
-                startActivity(Intent(this, SplashActivity::class.java))
-                finish()
-            }
+            .addOnCompleteListener {startSplashActivity()}
+    }
+
+    private fun startSplashActivity() {
+        SplashActivity.start(this)
+        finish()
     }
 }

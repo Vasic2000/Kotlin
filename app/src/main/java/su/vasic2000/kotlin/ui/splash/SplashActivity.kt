@@ -10,8 +10,10 @@ import su.vasic2000.kotlin.ui.main.MainActivity
 class SplashActivity : BaseActivity<Boolean?, SplashViewState>() {
 
     companion object {
-        fun start(context: Context) = Intent(context,
-            SplashActivity::class.java).apply {
+        fun start(context: Context) = Intent(
+            context,
+            SplashActivity::class.java)
+            .apply {
             context.startActivity(this)
         }
     }

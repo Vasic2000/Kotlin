@@ -82,21 +82,27 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
         et_body.addTextChangedListener(textChahgeListener)
 
         btn_blue.setOnClickListener() {
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
-            note?.color = Note.Color.BLUE
-            saveNote()
+            note?.let{
+                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
+                note!!.color = Note.Color.BLUE
+                saveNote()
+            }
         }
 
         btn_orange.setOnClickListener() {
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.orange))
-            note?.color = Note.Color.ORANGE
-            saveNote()
+            note?.let{
+                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.orange))
+                note!!.color = Note.Color.ORANGE
+                saveNote()
+            }
         }
 
         btn_green.setOnClickListener() {
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
-            note?.color = Note.Color.GREEN
-            saveNote()
+            note?.let{
+                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
+                note!!.color = Note.Color.GREEN
+                saveNote()
+            }
         }
     }
 
@@ -106,7 +112,8 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
         note = note?.copy(
             title = et_title.text.toString(),
             text = et_body.text.toString(),
-            lastChanged = Date()
+            lastChanged = Date(),
+            color = note!!.color
         ) ?: Note(
             UUID.randomUUID().toString(),
             et_title.text.toString(),
