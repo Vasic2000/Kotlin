@@ -1,5 +1,7 @@
 package su.vasic2000.kotlin.ui.base
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,27 +11,25 @@ import su.vasic2000.kotlin.R
 import su.vasic2000.kotlin.data.errors.NoAuthException
 
 abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity() {
+
+    companion object {
+        const val RC_SIGN_IN = 1132
+    }
+
     abstract val viewModel: BaseViewModel<T, S>
-    abstract val layoutRes: Int
+    abstract val layoutRes: Int?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutRes)
+        layoutRes?.let {
+            setContentView(it)
+        }
         viewModel.getViewState().observe(this, object : Observer<S> {
             override fun onChanged(t: S?) {
-
                 if(t == null) return
                 if(t.error != null) renderError(t.error)
-
-//                t ?: return
-//                t.error?.let {
-//                    renderError(it)
-//                    return
-//                }
                 renderData(t.data)
-
             }
-
         })
     }
 
@@ -43,12 +43,25 @@ abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity() {
     }
 
     private fun startLogin() {
-        startActivityForResult() {
+        val providers = listOf(
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
+        startActivityForResult(
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
-                .setLogo(R.drawable.)
-        }
+                .setLogo(R.drawable.panda)
+                .setTheme(R.style.LoginStyle)
+                .setAvailableProviders(providers)
+                .build(),
+            RC_SIGN_IN
+        )
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == RC_SIGN_IN && resultCode != Activity.RESULT_OK) {
+            finish()
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     protected fun showError(error: String){
