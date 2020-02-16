@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="AppName">Заметки</string>
+    <string name="new_note_title">Новая заметка</string>
+    <string name="ExtraTitle">Заголовок</string>
+    <string name="NoteText">Введите текст здесь</string>
+    <string name="btnBlue">Голубой</string>
+    <string name="btnOrange">Ораньжевый</string>
+    <string name="btnGreen">Зелёный</string>
+    <string name="logout">Выйти</string>
+    <string name="logout_message">Точно?</string>
+    <string name="positive_button">Да</string>
+    <string name="negative_button">Нет</string>
+    <string name="exit_title">Выход</string>
+</resources>
