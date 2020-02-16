@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.firebase.ui.auth.AuthUI
+import su.vasic2000.kotlin.R
+import su.vasic2000.kotlin.data.errors.NoAuthException
 
 abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity() {
     abstract val viewModel: BaseViewModel<T, S>
@@ -33,7 +36,19 @@ abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity() {
     abstract fun renderData(data: T)
 
     private fun renderError(error: Throwable) {
-        error.message?.let { showError(it) }
+        when(error) {
+            is NoAuthException -> startLogin()
+            else -> error.message?.let {showError(it)}
+        }
+    }
+
+    private fun startLogin() {
+        startActivityForResult() {
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setLogo(R.drawable.)
+        }
+
     }
 
     protected fun showError(error: String){
