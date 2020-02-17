@@ -25,7 +25,7 @@ class FireStoreProvider : RemoteDataProvider {
 //    }
 
     private val userNotesCollection: CollectionReference
-        get() = currentUser?.let {                                                                                                                                                                                                                                                                                                                                      //Я копипастил код с урока и не заметил эту надпись
+        get() = currentUser?.let {   //Я НЕ копипастил код с урока и заметил эту надпись
             store.collection(USERS_COLLECTION).document(it.uid).collection(NOTES_COLLECTION)
         } ?: throw NoAuthException()
 
