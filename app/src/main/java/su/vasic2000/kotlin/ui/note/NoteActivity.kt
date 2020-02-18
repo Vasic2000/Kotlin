@@ -7,15 +7,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_note.*
+import org.koin.android.viewmodel.ext.android.viewModel
 import su.vasic2000.kotlin.R
 import su.vasic2000.kotlin.data.entity.Note
 import su.vasic2000.kotlin.ui.base.BaseActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NoteActivity : BaseActivity<Note?, NoteViewState>() {
+class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
     companion object {
         private val EXTRA_NOTE = NoteActivity::class.java.name + "extra.NOTE"
         private const val DATE_TIME_FORMAT = "dd.MM.yy HH:mm"
@@ -28,7 +28,7 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     private var note: Note? = null
-    override val viewModel: NoteViewModel by lazy { ViewModelProvider(this).get(NoteViewModel::class.java) }
+    override val model: NoteViewModel by viewModel()
     override val layoutRes = R.layout.activity_note
 
     val textChahgeListener = object : TextWatcher {
@@ -46,14 +46,15 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
         val noteId = intent.getStringExtra(EXTRA_NOTE)
 
         noteId?.let {
-            viewModel.loadNote(it)
+            model.loadNote(it)
         } ?: let {
             supportActionBar?.title = getString(R.string.new_note_title)
         }
     }
 
-    override fun renderData(data: Note?) {
-        this.note = data
+    override fun renderData(data: NoteViewState.Data) {
+        if(data.isDeleted) finish()
+        this.note = data.note
         supportActionBar?.title = this.note?.let {
             SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault()).format(note!!.lastChanged)
         } ?: getString(R.string.new_note_title)
@@ -120,7 +121,7 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
             et_body.text.toString()
         )
 
-        note?.let { viewModel.save(it) }
+        note?.let { model.save(it) }
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {

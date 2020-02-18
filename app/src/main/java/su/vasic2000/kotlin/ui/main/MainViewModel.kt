@@ -8,7 +8,7 @@ import su.vasic2000.kotlin.data.model.NoteResult
 import su.vasic2000.kotlin.ui.base.BaseViewModel
 
 
-class MainViewModel: BaseViewModel<List<Note>?, MainViewState>() {
+class MainViewModel(private val noteRepository: NoteRepository): BaseViewModel<List<Note>?, MainViewState>() {
 
     private val notesObserver = object : Observer<NoteResult> {
         override fun onChanged(t: NoteResult?) {
@@ -25,7 +25,7 @@ class MainViewModel: BaseViewModel<List<Note>?, MainViewState>() {
         }
     }
 
-    private val repositoryNotes = NoteRepository.getNotes()
+    private val repositoryNotes = noteRepository.getNotes()
 
     init {
         viewSateLiveData.value = MainViewState()

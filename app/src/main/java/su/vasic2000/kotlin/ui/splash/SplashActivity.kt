@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import androidx.lifecycle.ViewModelProvider
+import org.koin.android.viewmodel.ext.android.viewModel
 import su.vasic2000.kotlin.ui.base.BaseActivity
 import su.vasic2000.kotlin.ui.main.MainActivity
 
@@ -18,9 +19,7 @@ class SplashActivity : BaseActivity<Boolean?, SplashViewState>() {
         }
     }
 
-    override val viewModel by lazy {
-        ViewModelProvider(this).get(SplashViewModel::class.java)
-    }
+    override val model: SplashViewModel by viewModel()
 
     override val layoutRes: Int? = null
 
@@ -33,7 +32,7 @@ class SplashActivity : BaseActivity<Boolean?, SplashViewState>() {
 
     override fun onResume() {
         super.onResume()
-        Handler().postDelayed({ viewModel.requestUser() }, 1000)
+        Handler().postDelayed({ model.requestUser() }, 1000)
 //        viewModel.requestUser()
     }
 

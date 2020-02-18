@@ -6,17 +6,18 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.alert
+import org.koin.android.viewmodel.ext.android.viewModel
 import su.vasic2000.kotlin.R
 import su.vasic2000.kotlin.data.entity.Note
 import su.vasic2000.kotlin.ui.base.BaseActivity
 import su.vasic2000.kotlin.ui.note.NoteActivity
 import su.vasic2000.kotlin.ui.splash.SplashActivity
 
-class MainActivity : BaseActivity<List<Note>?, MainViewState>(), OutDialog.LogoutListener {
+class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
 
     companion object {
         fun start(context: Context) = Intent(
@@ -27,16 +28,14 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>(), OutDialog.Logou
         }
     }
 
-    override val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this).get(MainViewModel::class.java)
-    }
+    override val model: MainViewModel by viewModel()
+
 
     override val layoutRes = R.layout.activity_main
     lateinit var adapter: NotesRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         rv_notes.layoutManager = GridLayoutManager(this, 2)
@@ -60,12 +59,13 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>(), OutDialog.Logou
         else -> false
     }
 
-    fun showOutDialog() {
-        supportFragmentManager.findFragmentByTag(OutDialog.TAG) ?:
-        OutDialog.createInstance().show(
-            supportFragmentManager,
-            OutDialog.TAG
-        )
+    private fun showOutDialog() {
+        alert {
+            titleResource = R.string.exit_title
+            messageResource = R.string.logout_message
+            positiveButton(R.string.positive_button) {onLogOut()}
+            negativeButton(R.string.negative_button) {dialog ->  dialog.dismiss()}
+        }.show()
     }
 
     override fun renderData(data: List<Note>?) {
@@ -74,7 +74,7 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>(), OutDialog.Logou
         }
     }
 
-    override fun onLogOut() {
+    private fun onLogOut() {
         AuthUI.getInstance()
             .signOut(this)
             .addOnCompleteListener {startSplashActivity()}
