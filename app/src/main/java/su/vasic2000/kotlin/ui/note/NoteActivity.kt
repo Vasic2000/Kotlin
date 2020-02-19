@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_note.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import su.vasic2000.kotlin.R
+import su.vasic2000.kotlin.common.getColorRes
 import su.vasic2000.kotlin.data.entity.Note
 import su.vasic2000.kotlin.ui.base.BaseActivity
 import java.text.SimpleDateFormat
@@ -65,46 +66,12 @@ class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
         note?.let {
             et_title.setText(it.title)
             et_body.setText(it.text)
-            val color = when (it.color) {
-                Note.Color.WHITE -> R.color.white
-                Note.Color.YELLOW -> R.color.yellow
-                Note.Color.GREEN -> R.color.green
-                Note.Color.BLUE -> R.color.blue
-                Note.Color.RED -> R.color.red
-                Note.Color.VIOLET -> R.color.violet
-                Note.Color.PINK -> R.color.pink
-                Note.Color.ORANGE -> R.color.orange
-                Note.Color.DARKBLUE -> R.color.darkblue
-            }
+            val color = it.color.getColorRes()
             toolbar.setBackgroundColor(ContextCompat.getColor(this, color))
-        }
+            }
 
         et_title.addTextChangedListener(textChahgeListener)
         et_body.addTextChangedListener(textChahgeListener)
-
-        btn_blue.setOnClickListener() {
-            note?.let{
-                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.blue))
-                note!!.color = Note.Color.BLUE
-                saveNote()
-            }
-        }
-
-        btn_orange.setOnClickListener() {
-            note?.let{
-                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.orange))
-                note!!.color = Note.Color.ORANGE
-                saveNote()
-            }
-        }
-
-        btn_green.setOnClickListener() {
-            note?.let{
-                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.green))
-                note!!.color = Note.Color.GREEN
-                saveNote()
-            }
-        }
     }
 
     fun saveNote() {

@@ -12,4 +12,6 @@
     <string name="positive_button">Да</string>
     <string name="negative_button">Нет</string>
     <string name="exit_title">Выход</string>
+    <string name="remove_note">Удалить</string>
+    <string name="change_color">Перекрасить</string>
 </resources>

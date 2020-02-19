@@ -11,4 +11,6 @@
     <string name="positive_button">Yes</string>
     <string name="negative_button">No</string>
     <string name="exit_title">Exit</string>
+    <string name="remove_note">Remove note</string>
+    <string name="change_color">Change color</string>
 </resources>
