@@ -78,6 +78,4 @@ class ColorCircleView @JvmOverloads constructor(context: Context, attrs: Attribu
         canvas.drawCircle(center.first, center.second, radius, strokePaint)
         canvas.drawCircle(center.first, center.second, radius - strokeWidth, fillPaint)
     }
-
-
 }
