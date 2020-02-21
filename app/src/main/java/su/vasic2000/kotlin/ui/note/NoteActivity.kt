@@ -70,8 +70,8 @@ class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
     fun initView() {
         note?.let {
             removeEditListener()
-            et_title.setText(it.title)
-            et_body.setText(it.text)
+            if(et_title.text.toString() != it.title) et_title.setText(it.title)
+            if(et_body.text.toString() != it.text) et_body.setText(it.text)
             var color = it.color.getColorInt(this)
             toolbar.setBackgroundColor(color)
             supportActionBar?.title =
@@ -95,8 +95,8 @@ class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
     }
 
     private fun setEditListener() {
-        et_title.removeTextChangedListener(textChahgeListener)
-        et_body.removeTextChangedListener(textChahgeListener)
+        et_title.addTextChangedListener(textChahgeListener)
+        et_body.addTextChangedListener(textChahgeListener)
     }
 
     fun saveNote() {
