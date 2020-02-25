@@ -1,7 +1,7 @@
 package su.vasic2000.kotlin.data.provider
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
@@ -60,6 +60,14 @@ class FireStoreProviderTest {
     }
 
     @Test
+    fun `deleteNote calls document delete`() {
+        val mockDocumentReference = mockk<DocumentReference>()
+        every { mockResultCollection.document(testNotes[0].id) } returns mockDocumentReference
+        provider.deleteNote(testNotes[0].id)
+        verify(exactly = 1) { mockDocumentReference.delete() }
+    }
+
+    @Test
     fun `subscribe to all notes returns notes`() {
         var result: List<Note>? = null
         val mockSnapshot = mockk<QuerySnapshot>()
@@ -75,44 +83,27 @@ class FireStoreProviderTest {
     }
 
     @Test
-    fun `deleteNote calls document delete`() {
-        val mockDocumentReference = mockk<DocumentReference>()
-        every { mockResultCollection.document(testNotes[0].id) } returns mockDocumentReference
-        provider.deleteNote(testNotes[0].id)
-        verify(exactly = 1) { mockDocumentReference.delete() }
-    }
+    fun `getNoteByID return note`() {
+        var noteResult: Note? = null
+        val slot = slot<OnSuccessListener<DocumentSnapshot>>()
+        every {
+            mockResultCollection.document(testNotes[0].id).get().addOnSuccessListener(capture(slot))
+        } returns mockk()
 
-    @Test
-    fun `getNoteByID return note by Id`() {
-//        Проверить что вызывается гет
-        var mockNoteResult: MutableLiveData<NoteResult>?= null
-        val mockId = mockk<String>()
-        val slot = slot<EventListener<QuerySnapshot>>()
-
-        provider.getNoteById(mockId).observeForever{
-            mockNoteResult = (it as? NoteResult.Success<MutableLiveData<NoteResult>>)?.data
+        provider.getNoteById("1").observeForever {
+            noteResult = (it as? NoteResult.Success<Note>)?.data
         }
-        slot.captured.onEvent(mockSnapshot, null)
-        Assert.assertEquals(testNotes[0], NoteResult)
+        slot.captured.onSuccess(mockDocument1)
+        Assert.assertEquals(testNotes[0], noteResult)
+        Assert.assertNotEquals(testNotes[1], noteResult)
+        Assert.assertNotEquals(testNotes[2], noteResult)
 
-
-
-        verify(exactly = 1) { true}
+        slot.captured.onSuccess(mockDocument3)
+        provider.getNoteById("3").observeForever {
+            noteResult = (it as? NoteResult.Success<Note>)?.data
+        }
+        Assert.assertNotEquals(testNotes[2], noteResult)
     }
-//
-//    override fun getNoteById(id: String) = MutableLiveData<NoteResult>().apply {
-//        try {
-//            userNotesCollection.document(id).get()
-//                .addOnSuccessListener { snapshot ->
-//                    value = NoteResult.Success(snapshot.toObject(Note::class.java))
-//                }.addOnFailureListener {
-//                    value = NoteResult.Error(it)
-//                }
-//        } catch (e: Throwable) {
-//            value = NoteResult.Error(e)
-//        }
-//    }
-
 
     companion object {
         @BeforeClass
@@ -125,13 +116,14 @@ class FireStoreProviderTest {
     @Before
     fun setup(){
         clearAllMocks()
-        every{mockAuth.currentUser} returns mockUser
+        every { mockAuth.currentUser } returns mockUser
         every { mockUser.uid } returns ""
         every { mockDB.collection(any()).document(any()).collection(any()) } returns mockResultCollection
 
         every { mockDocument1.toObject(Note::class.java) } returns testNotes[0]
         every { mockDocument2.toObject(Note::class.java) } returns testNotes[1]
         every { mockDocument3.toObject(Note::class.java) } returns testNotes[2]
+
     }
 
     @After
