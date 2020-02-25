@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,6 +18,23 @@
             app:layout_scrollFlags="scroll|enterAlways"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             app:title="@string/AppName" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimaryDark" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <su.vasic2000.kotlin.ui.customviews.ColorPickerView
+                android:id="@+id/colorPicker"
+                android:layout_width="wrap_content"
+                android:layout_height="?attr/actionBarSize" />
+
+        </HorizontalScrollView>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -47,41 +65,6 @@
             android:layout_marginTop="@dimen/NoteMargin"
             android:background="@null"
             android:hint="@string/NoteText"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/NoteMargin"
-            >
-
-            <Button
-                android:id="@+id/btn_blue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/blue"
-                android:text="@string/btnBlue"
-                android:layout_margin="@dimen/minPadding"/>
-
-            <Button
-                android:id="@+id/btn_orange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/orange"
-                android:text="@string/btnOrange"
-                android:layout_margin="@dimen/minPadding"/>
-
-            <Button
-                android:id="@+id/btn_green"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/green"
-                android:text="@string/btnGreen"
-                android:layout_margin="@dimen/minPadding"/>
-        </LinearLayout>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
