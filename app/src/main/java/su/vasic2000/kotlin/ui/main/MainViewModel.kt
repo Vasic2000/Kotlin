@@ -34,7 +34,7 @@ class MainViewModel(private val noteRepository: NoteRepository): BaseViewModel<L
 
     fun viewState(): LiveData<MainViewState> = viewSateLiveData
 
-    override fun onCleared() {
+    override public fun onCleared() {
         repositoryNotes.removeObserver(notesObserver)
         super.onCleared()
         println("onCleared")
