@@ -7,10 +7,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.firebase.ui.auth.AuthUI
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import su.vasic2000.kotlin.R
 import su.vasic2000.kotlin.data.errors.NoAuthException
+import kotlin.coroutines.CoroutineContext
 
-abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity() {
+abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity(), CoroutineScope {
+
+    val job = Job()
+
+    override val coroutineContext: CoroutineContext by lazy {
+        Dispatchers.Main + job
+    }
+
 
     companion object {
         const val RC_SIGN_IN = 1132
