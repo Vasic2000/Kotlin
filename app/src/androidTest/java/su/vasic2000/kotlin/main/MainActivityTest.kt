@@ -52,7 +52,7 @@ class MainActivityTest {
             )
         )
 
-        every { model.getViewState() } returns viewStateLiveData
+        every { model } returns viewStateLiveData
         activityTestRule.launchActivity(null)
         viewStateLiveData.postValue(MainViewState(notes = testNotes))
     }
