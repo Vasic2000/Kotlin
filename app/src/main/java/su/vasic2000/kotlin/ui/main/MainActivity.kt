@@ -17,7 +17,7 @@ import su.vasic2000.kotlin.ui.base.BaseActivity
 import su.vasic2000.kotlin.ui.note.NoteActivity
 import su.vasic2000.kotlin.ui.splash.SplashActivity
 
-class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
+class MainActivity : BaseActivity<List<Note>?>() {
 
     companion object {
         fun start(context: Context) = Intent(
@@ -29,8 +29,6 @@ class MainActivity : BaseActivity<List<Note>?, MainViewState>() {
     }
 
     override val model: MainViewModel by viewModel()
-
-
     override val layoutRes = R.layout.activity_main
     lateinit var adapter: NotesRVAdapter
 
