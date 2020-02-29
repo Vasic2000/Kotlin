@@ -1,43 +1,33 @@
 package su.vasic2000.kotlin.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
+import androidx.annotation.VisibleForTesting
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import su.vasic2000.kotlin.data.NoteRepository
 import su.vasic2000.kotlin.data.entity.Note
 import su.vasic2000.kotlin.data.model.NoteResult
 import su.vasic2000.kotlin.ui.base.BaseViewModel
 
 
-class MainViewModel(private val noteRepository: NoteRepository): BaseViewModel<List<Note>?, MainViewState>() {
+class MainViewModel(private val noteRepository: NoteRepository): BaseViewModel<List<Note>?>() {
 
-    private val notesObserver = object : Observer<NoteResult> {
-        override fun onChanged(t: NoteResult?) {
-            t ?: return
+    private val noteChanel = noteRepository.getNotes()
 
-            when (t) {
-                is NoteResult.Success<*> -> {
-                    viewSateLiveData.value = MainViewState(notes = t.data as? List<Note>)
-                }
-                is NoteResult.Error -> {
-                    viewSateLiveData.value = MainViewState(error = t.error)
+    init {
+        launch {
+            noteChanel.consumeEach {
+                when(it){
+                    is NoteResult.Success<*> -> setData(it.data as? List<Note>)
+                    is NoteResult.Error -> setError(it.error)
                 }
             }
         }
     }
 
-    private val repositoryNotes = noteRepository.getNotes()
-
-    init {
-        viewSateLiveData.value = MainViewState()
-        repositoryNotes.observeForever(notesObserver)
-        }
-
-    fun viewState(): LiveData<MainViewState> = viewSateLiveData
-
-    override fun onCleared() {
-        repositoryNotes.removeObserver(notesObserver)
+    @VisibleForTesting
+    public override fun onCleared() {
+        noteChanel.cancel()
         super.onCleared()
-        println("onCleared")
     }
 
 }

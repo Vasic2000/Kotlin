@@ -3,12 +3,11 @@ package su.vasic2000.kotlin.ui.splash
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
-import androidx.lifecycle.ViewModelProvider
 import org.koin.android.viewmodel.ext.android.viewModel
 import su.vasic2000.kotlin.ui.base.BaseActivity
 import su.vasic2000.kotlin.ui.main.MainActivity
 
-class SplashActivity : BaseActivity<Boolean?, SplashViewState>() {
+class SplashActivity : BaseActivity<Boolean?>() {
 
     companion object {
         fun start(context: Context) = Intent(

@@ -1,43 +1,54 @@
 package su.vasic2000.kotlin.ui.note
+import kotlinx.coroutines.launch
 import su.vasic2000.kotlin.data.NoteRepository
 import su.vasic2000.kotlin.data.entity.Note
 import su.vasic2000.kotlin.data.model.NoteResult
 import su.vasic2000.kotlin.ui.base.BaseViewModel
 
-class NoteViewModel(private val noteRepository: NoteRepository) : BaseViewModel<NoteViewState.Data, NoteViewState>() {
+class NoteViewModel(private val noteRepository: NoteRepository) : BaseViewModel<NoteData>() {
 
-    private var pendingNote: Note? = null
-    get() = viewSateLiveData.value?.data?.note
+    private val pendingNote: Note?
+        get() = getViewState().poll()?.note
 
     fun save(note: Note) {
-        viewSateLiveData.value = NoteViewState(NoteViewState.Data(note = note))
+        setData(NoteData(note = note))
     }
 
     fun deleteNote() {
-        pendingNote?.let {
-            noteRepository.deleteNote(it.id).observeForever {result ->
-                viewSateLiveData.value = when (result) {
-                    is NoteResult.Success<*> -> NoteViewState(NoteViewState.Data(isDeleted = true))
-                    is NoteResult.Error -> NoteViewState(error = result.error)
+        pendingNote?.let { note ->
+            launch {
+                try {
+                    noteRepository.deleteNote(note.id)
+                    setData(NoteData(isDeleted = true))
+                } catch (e: Throwable) {
+                    setError(e)
                 }
             }
         }
     }
 
-    fun loadNote(noteID: String) {
-        noteRepository.getNoteById(noteID).observeForever { result ->
-            result?.let {
-                viewSateLiveData.value = when (result) {
-                    is NoteResult.Success<*> -> NoteViewState(NoteViewState.Data(note = result.data as Note))
-                    is NoteResult.Error -> NoteViewState(error = result.error)
+        fun loadNote(noteID: String) {
+        launch {
+            try {
+                noteRepository.getNoteById(noteID).let {
+                    setData(NoteData(note = it))
                 }
+            } catch (e: Throwable) {
+                setError(e)
             }
         }
     }
 
-    override fun onCleared() {
-        pendingNote?.let {
-            noteRepository.saveNote(it)
+    override public fun onCleared() {
+        launch {
+            pendingNote?.let {
+                try {
+                    noteRepository.saveNote(it)
+                } catch (e: Throwable) {
+                    setError(e)
+                }
+            }
+            super.onCleared()
         }
     }
 }
